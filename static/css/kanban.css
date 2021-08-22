@@ -1,0 +1,241 @@
+
+  
+  a:focus {
+      outline: none;
+  }
+  
+  button, span {
+      outline: none;
+  }
+  /* Page content */
+  #page-content {
+      clear: both;
+      height: calc(100% - 80px);
+      width: 100%;
+      top: 80px;
+  }
+  
+  /* Login */
+  .login{
+    position: relative;
+    top: 50%;
+    width: 300px;
+    display: table;
+    margin: -150px auto 0 auto;
+    background: #fff;
+    border-radius: 4px;
+  }
+  
+  .legend{
+    position: relative;
+    display: block;
+    background: #2A3F54;
+    padding: 15px;
+    color: #fff;
+    font-size: 20px;
+    margin-bottom: 5px;
+  }
+  
+  .input{
+    position: relative;
+    width: 90%;
+    margin: 15px auto;
+  }
+  
+  .input > input{
+    width: 100%;
+    clear: both;
+  }
+  
+  input[type=text],
+  input[type=password] {
+      box-sizing : border-box;
+      border-radius:5px;
+        -moz-border-radius:5px;
+        -webkit-border-radius:5px;
+      box-shadow: inset none;
+      -webkit-box-shadow: inset none;
+  }
+  
+  .login > label{
+    margin-left: 15px;
+  }
+  
+  .delete{
+    background-color: #2A3F54;
+    border: none;
+    border-radius: 10px;
+    color: white;
+    padding: 5px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+  }
+  
+  .button {
+      background-color: #2A3F54;
+      border: none;
+      color: white;
+      padding: 10px 20px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 14px;
+  }
+  
+  div.ui-dialog-titlebar{
+      background-color: #2A3F54;
+  }
+  .header-elem{
+      display: flex;
+      justify-content: center;
+      
+      margin-top: 40px;
+      margin-bottom: 10px;
+  }
+  .save{
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-bottom: 20px;
+	background-color:#2A3F54;
+	border-radius:28px;
+	border:1px solid #2A3F54;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:17px;
+	padding:11px 52px;
+  }
+  .save:hover{
+    background-color:#F7F7F7;
+    border:1px solid #2A3F54;
+  }
+  .add{
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-bottom: 20px;
+    background-color:#2A3F54;
+	border-radius:28px;
+	border:1px solid #2A3F54;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:17px;
+	padding:11px 52px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #2f6627;
+  }
+  .add:hover{
+    background-color:#F7F7F7;
+    border:1px solid #2A3F54;
+  }
+  /* Error messages */
+  .error {
+      margin-left: 15px;
+      color: red;
+  }
+  
+  .kanban{
+    background-color: #fff;
+    box-shadow: 0 0 10px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+  }
+
+  /* KANBAN */
+  .kanban-container {
+    border-radius: 10px;
+      background-color: #fff;
+      box-shadow: 0 0 10px 4px rgba(0, 0, 0, 0.1);
+      height: 400px;
+      width: 100%;
+      position: relative;
+  }
+  
+  .kanban-column {
+      max-height: 100%;
+      float: left;
+  }
+  
+  .kanban-elem {
+      background: #F7F7F7;
+      height: 100px;
+      width: 90%;
+      margin: 10px auto;
+      border-radius: 5px;
+  }
+  
+  .kanban-header {
+      border-top-right-radius: 5px;
+      border-top-left-radius: 5px;
+      background-color: #2A3F54;
+      text-align: center;
+      font-size: 1.2em;
+      -webkit-touch-callout: none; /* iOS Safari */
+      -webkit-user-select: none; /* Safari */
+       -khtml-user-select: none; /* Konqueror HTML */
+         -moz-user-select: none; /* Firefox */
+          -ms-user-select: none; /* Internet Explorer/Edge */
+              user-select: none; /* Non-prefixed version, currently
+                                    supported by Chrome and Opera */
+  }
+  
+  .kanban-description{
+      padding-left: 5px;
+      padding-right: 5px;
+      -webkit-touch-callout: none; /* iOS Safari */
+      -webkit-user-select: none; /* Safari */
+       -khtml-user-select: none; /* Konqueror HTML */
+         -moz-user-select: none; /* Firefox */
+          -ms-user-select: none; /* Internet Explorer/Edge */
+              user-select: none; /* Non-prefixed version, currently
+                                    supported by Chrome and Opera */
+  }
+  
+  .tilt {
+    transform: rotate(3deg);
+    -moz-transform: rotate(3deg);
+    -webkit-transform: rotate(3deg);
+  }
+  
+  .delete {
+      float: right;
+      margin-right: 15px;
+  }
+  
+  /* add card */
+  .ui-widget-header {
+      background-color: #2A3F54;
+  }
+  
+  textarea {
+      width: 100%;
+      clear: both;
+      resize: none;
+      margin: -1px;
+      padding: 0;
+      border-width: 1px;
+      box-sizing : border-box;
+      border-radius:5px;
+        -moz-border-radius:5px;
+        -webkit-border-radius:5px;
+      box-shadow: inset none;
+      -webkit-box-shadow: inset none;
+      overflow: auto;
+  }
+  
+  .dropdown {
+      width: 100%;
+      clear: both;
+  }
+  
+  
+  /* footer */
+  .footer{
+      position: fixed;
+      left: 10px;
+      bottom: 0;
+  }
+  
