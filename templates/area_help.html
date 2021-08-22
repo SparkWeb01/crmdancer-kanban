@@ -1,0 +1,186 @@
+{% extends "layout.html" %}
+{% block title %}Помощь{% endblock %}
+{% block body %}
+
+
+
+  <div class="col-md-6 col-sm-6 col-xs-12">
+    <div class="x_panel">
+      <div class="x_title">
+        <h2><i class="fa fa-align-left"></i> Помощь <small>работа с црм</small></h2>
+        <ul class="nav navbar-right panel_toolbox">
+          <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+          </li>
+        </ul>
+        <div class="clearfix"></div>
+      </div>
+      <div class="x_content">
+
+        <!-- start accordion -->
+        <div class="accordion" id="accordion" role="tablist" aria-multiselectable="true">
+          <div class="panel">
+            <a class="panel-heading collapsed" role="tab" id="headingOne" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+              <h4 class="panel-title">Видео с демонстрацией работы CRM</h4>
+            </a>
+            <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+              <div class="panel-body">
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/UeuUJzLIRaU" frameborder="0" allowfullscreen></iframe>
+              </div>
+            </div>
+          </div>
+          <div class="panel">
+            <a class="panel-heading collapsed" role="tab" id="headingOne0" data-toggle="collapse" data-parent="#accordion" href="#collapseOne0" aria-expanded="true" aria-controls="collapseOne0">
+              <h4 class="panel-title">Что такое CRM?</h4>
+            </a>
+            <div id="collapseOne0" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne0">
+              <div class="panel-body">
+                <p>Расшифровывается как <b>Customer Relationship Management</b>, что в переводе с английского означает:  Система управления взаимоотношениями с клиентами.
+                  Звучит непонятно? Ничего сакрального здесь нет. CRM - это всего лишь программа, которая сэкономит вам время, улучшит работу с клиентами и, как следствие, поможет вам заработать больше денег.</p>
+
+              </div>
+            </div>
+          </div>
+          <div class="panel">
+            <a class="panel-heading collapsed" role="tab" id="headingTwo" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+              <h4 class="panel-title">Добавление нового клиента и редактирование</h4>
+            </a>
+            <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+              <div class="panel-body">
+                Нажимаем в меню на кнопку «Добавить нового клиента» и заполняем формы. Поля, обязательные для заполнения – телефон и название клиента, все остальные поля - по желанию. Телефон клиента требуется писать в международном формате, через 7-ку, если клиент из России. Когда все заполнено, нажимаем на кнопку «Создать нового клиента».
+                Клиент создан. Если на главной странице CRM  нажать на голубую иконку  с изображением ручки, то можно попасть в раздел  «Редактирование карточки клиента». В разделе «Редактирование карточки клиента» можно ввести дополнительный телефон клиента и дополнительное контактное лицо. Также в этом разделе можно запланировать следующий звонок клиенту.
+
+              </div>
+            </div>
+          </div>
+          <div class="panel">
+            <a class="panel-heading collapsed" role="tab" id="headingThree" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+              <h4 class="panel-title">Звонок клиенту и журнал вызовов</h4>
+            </a>
+            <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+              <div class="panel-body">
+                <p>Когда мы хотим позвонить клиенту, то все, что нам надо сделать – это на главной странице CRM нажать на зеленую кнопку с иконкой телефона.  Когда телефонов у клиента несколько, то нажимаем на зеленую кнопку с выпадающим списком телефонов.</p>
+                <p><a href="/static/help/call.png" target="_blank"><img class="img-thumbnail img-responsive" src="/static/help/call.png" alt="" width="100%" /></p>
+                <p>Звонок инициирован.</p>
+                <p>А CRM нас тем временем перебрасывает в раздел «Журнал звонков» клиента, где есть карточка клиента, которую можно развернуть одним кликом мышки. И просмотреть на ней имя и отчество клиента, если вы его успели забыть, и также дополнительную информацию, например, комментарий о компании.</p>
+
+                <p>Также в разделе «Журнал звонков» можно оставить комментарий о текущем звонке. Этот комментарий вам очень пригодится, если с клиентом в следующий раз придется говорить длительное время спустя, чтобы не вспоминать судорожно, о чем говорили в прошлый раз.</p>
+                <p>Все комментарии сохраняются автоматически, нажимать ни на какие кнопки для сохранения не требуется.</p>
+
+              </div>
+            </div>
+          </div>
+          <div class="panel">
+            <a class="panel-heading collapsed" role="tab" id="heading4" data-toggle="collapse" data-parent="#accordion" href="#collapse4" aria-expanded="false"
+              aria-controls="collapse4">
+              <h4 class="panel-title">Прием входящего звонка от клиента</h4>
+            </a>
+            <div id="collapse4" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading4">
+              <div class="panel-body">
+                <p>Когда вам звонит какой-нибудь клиент, то CRM  автоматически покажет окошко с именем клиента и названием компании,  и вариантами действий «Закрыть уведомление» или «Открыть журнал звонков данного клиента».</p>
+                <p><a href="/static/help/screen_incoming_call.png" target="_blank"><img class="img-thumbnail img-responsive" src="/static/help/screen_incoming_call.png" alt="" width="100%" /></p>
+                <p>Если вы нажмете на «Журнал звонков», то сможете прочитать информацию из карточки клиента и просмотреть комментарии к звонкам, которые вы оставляли за время общения с клиентом. О входящем звонке, так же как об исходящим звонке, можно оставить свой комментарий.  Система комментирования пригодится при долгосрочной работе с клиентом.</p>
+
+              </div>
+            </div>
+          </div>
+          <div class="panel">
+            <a class="panel-heading collapsed" role="tab" id="heading5" data-toggle="collapse" data-parent="#accordion" href="#collapse5" aria-expanded="false"
+              aria-controls="collapse5">
+              <h4 class="panel-title">Настройка напоминаний о запланированных звонках</h4>
+            </a>
+            <div id="collapse5" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading5">
+              <div class="panel-body">
+                <p>На главной странице CRM есть колонка в таблице под названием «Дата следующего звонкa».  Если нажать на белую кнопку «Установить»  в этой графе, то можно запланировать будущий звонок клиенту с датой и точным временем звонка.</p>
+
+                <p><a href="/static/help/remide.png" target="_blank"><img class="img-thumbnail img-responsive" src="/static/help/reminde.png" alt="" width="100%" /></p>
+                <p>Когда придет время, CRM сообщит вам о запланированном звонке клиенту.</p>
+                <p>И предложит варианты действий: «Позвонить», «Изменить время звонка» или вообще «Отменить звонок».</p>
+
+                <p>Также запланировать следующий звонок клиенту можно с раздела «Редактирование карточки клиента».</p>
+
+              </div>
+            </div>
+          </div>
+          <div class="panel">
+            <a class="panel-heading collapsed" role="tab" id="heading6" data-toggle="collapse" data-parent="#accordion" href="#collapse6" aria-expanded="false"
+              aria-controls="collapse6">
+              <h4 class="panel-title">Работа с таблицей клиентов</h4>
+            </a>
+            <div id="collapse6" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading6">
+              <div class="panel-body">
+                <p>CRM может работать очень быстро с сотнями и тысячами клиентов.
+                  За доли секунды можно отсортировать или с помощью фильтров найти нужных клиентов.</p>
+
+                <p>Кнопка «Сбросить фильтры» очищает все сортировки и фильтрации.</p>
+
+              </div>
+            </div>
+          </div>
+
+          <div class="panel">
+            <a class="panel-heading collapsed" role="tab" id="heading7" data-toggle="collapse" data-parent="#accordion" href="#collapse7" aria-expanded="false"
+              aria-controls="collapse7">
+              <h4 class="panel-title">Раздел запланированных звонков на сегодня</h4>
+            </a>
+            <div id="collapse7" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading7">
+              <div class="panel-body">
+                <p>Если у вас есть запланированные звонки на сегодняшний день, то их можно посмотреть в удобной форме, кликнув на раздел в меню  «План звонков на сегодня». На этой странице по нисходящей указано время звонка и информация о клиенте с данными из карточки и последние комментарии из журнала звонка (если вы его там оставляли).</p>
+
+                <p><a href="/static/help/today.png" target="_blank"><img class="img-thumbnail img-responsive" src="/static/help/today.png" alt="" width="100%" /></p>
+                <p>Если кликнуть на зеленую кнопку со стрелками и временем, то можно изменить время. Например, перенести звонок на более поздний срок.  Так же с этой страницы можно инициировать звонок клиенту, кликнув на кнопку с номером телефона.</p>
+
+              </div>
+            </div>
+          </div>
+
+
+          <div class="panel">
+            <a class="panel-heading collapsed" role="tab" id="heading8" data-toggle="collapse" data-parent="#accordion" href="#collapse8" aria-expanded="false"
+              aria-controls="collapse8">
+              <h4 class="panel-title">Записи звонков</h4>
+            </a>
+            <div id="collapse8" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading8">
+              <div class="panel-body">
+                <p>Слева в меню CRM есть кнопка «Записи звонков», если кликнуть на ее, мы попадем в раздел с записями телефонных разговоров. Здесь можно прослушать записи всех разговоров подряд в хронологическом порядке.</p>
+
+                <p><a href="/static/help/record.png" target="_blank"><img class="img-thumbnail img-responsive" src="/static/help/record.png" alt="" width="100%" /></p>
+                <p>А если кликнуть на оранжевую иконку в таблице с клиентами, то мы попадем на записи разговоров с конкретным клиентом. Будут отфильтрованы разговоры с клиентом за последние 3 месяца. Запись разговора можно прослушать на сайте CRM или скачать в формате mp3 и слушать, например,  в машине.  Прослушивание записей позволит  выявить ошибки в общении с клиентом,  обратить внимание на то, что показалось малозначительным, проанализировать и улучшить свою работу  с клиентом в будущем.</p> 
+
+                <p>Записи звонков появляются примерно где-то через 30 минут после завершения звонка.</p>
+
+              </div>
+            </div>
+          </div>
+
+
+
+          <div class="panel">
+            <a class="panel-heading collapsed" role="tab" id="heading9" data-toggle="collapse" data-parent="#accordion" href="#collapse9" aria-expanded="false"
+              aria-controls="collapse9">
+              <h4 class="panel-title">Календарь событий</h4>
+            </a>
+            <div id="collapse9" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading9">
+              <div class="panel-body">
+                <p>В «Календаре событий»  можно запланировать действие на определенный день и час. Достаточно кликнуть на любой день в календаре, выплывет окошко, в котором можно написать заголовок события, указать цветовую идентификацию события и указать время и дату.</p>
+
+                <p>Если кликнуть на кнопку «День», то можно кликать на определенный период времени и создавать, изменять и удалять события.</p>
+
+              </div>
+            </div>
+          </div>
+
+
+
+
+
+        </div>
+        <!-- end of accordion -->
+
+
+      </div>
+    </div>
+  </div>
+
+
+
+{% endblock %}

@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>{% block title %}{% endblock %}</title>
+
+    <!-- Bootstrap -->
+    <link href="/static/gentelella/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="/static/gentelella/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <!-- Custom Theme Style -->
+    <link href="/static/gentelella/build/css/custom.min.css" rel="stylesheet">
+
+    <script type="text/javascript" src="/static/datatable/jquery-1.12.3.js"></script>
+
+    <!-- datatable -->
+    <script type="text/javascript" src="/static/datatable/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="/static/datatable/dataTables.bootstrap.min.js"></script>
+
+    <!-- Календарь -->
+    <script type="text/javascript" src="/static/datepicker2016/js/moment-with-locales.min.js"></script>
+    <script type="text/javascript" src="/static/datepicker2016/js/bootstrap-datetimepicker.min.js"></script>
+    <link rel="stylesheet" href="/static/datepicker2016/css/bootstrap-datetimepicker.min.css" />
+    <link rel="stylesheet" href="/static/datatable/dataTables.bootstrap.min.css" />
+    <!-- End Календарь -->
+
+
+    <!-- full calendar -->
+    <link href="/static/gentelella/vendors/fullcalendar/dist/fullcalendar.min.css" rel="stylesheet">
+    <link href="/static/gentelella/vendors/fullcalendar/dist/fullcalendar.print.css" rel="stylesheet" media="print">
+    <script type="text/javascript" src="/static/gentelella/vendors/fullcalendar/dist/fullcalendar.min.js"></script>
+    <script type="text/javascript" src="/static/gentelella/vendors/fullcalendar/dist/lang/ru.js"></script>
+    <!-- /full calendar -->
+
+  </head>
+
+  <body class="nav-sm">
+    <div class="container body">
+      <div class="main_container">
+        <div class="col-md-3 left_col">
+          <div class="left_col scroll-view">
+            <div class="navbar nav_title" style="border: 0;">
+              <a href="/area/boss/index/" class="site_title"><i class="fa fa-paw"></i> <span>CRMDancer</span></a>
+            </div>
+
+            <div class="clearfix"></div>
+
+            <!-- menu profile quick info -->
+            <div class="profile clearfix">
+              <div class="profile_pic">
+                <img src="/static/gentelella/production/images/img.jpg" alt="..." class="img-circle profile_img">
+              </div>
+              <div class="profile_info">
+                <span>Добро пожаловать,</span>
+                <h2>{{ g.user_id }}</h2>
+              </div>
+              <div class="clearfix"></div>
+            </div>
+            <!-- /menu profile quick info -->
+
+            <br />
+
+            <!-- sidebar menu -->
+            <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+              <div class="menu_section">
+                <h3>Основное меню</h3>
+                <ul class="nav side-menu">
+                  <li><a href="/area/boss/index/"><i class="fa fa-home"></i> Главная</a></li>
+                  <li><a href="/area/boss/add/new/ruk/"><i class="fa fa-male"></i> Добавить нового руководителя</a></li>
+                  <li><a href="/area/boss/add/new/manager/"><i class="fa fa-user"></i> Добавить нового менеджера</a></li>
+                  <li><a href="/area/"><i class="fa fa-headphones"></i> Записи звонков</a></li>
+                </ul>
+              </div>
+
+            </div>
+            <!-- /sidebar menu -->
+          </div>
+        </div>
+
+        <!-- top navigation -->
+        <div class="top_nav">
+          <div class="nav_menu">
+            <nav>
+              <div class="nav toggle">
+                <a id="menu_toggle"><i class="fa fa-bars"></i></a>
+              </div>
+
+              <ul class="nav navbar-nav navbar-right">
+                <li class="">
+                  <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                    <img src="/static/gentelella/production/images/img.jpg" alt=""> {{ g.user_id }}
+                    <span class=" fa fa-angle-down"></span>
+                  </a>
+                  <ul class="dropdown-menu dropdown-usermenu pull-right">
+                    <li><a href="/area/help/">Помощь</a></li>
+                    <li><a href="/logout/"><i class="fa fa-sign-out pull-right"></i> Выход</a></li>
+                  </ul>
+                </li>
+
+              </ul>
+            </nav>
+          </div>
+        </div>
+        <!-- /top navigation -->
+
+
+        <script type="text/javascript">
+          $(document).ready(function(){
+
+            setTimeout(function(){
+              $('#flash_message').remove();
+            }, 3000);
+          })
+        </script>
+
+        <!-- page content -->
+        <div class="right_col" role="main">
+
+          <div id="flash_message">
+            {% import "bootstrap/utils.html" as utils %} {{ utils.flashed_messages(dismissible=True) }}
+          </div>
+
+
+          <div class="container hidden" id="IncommingCallAlert">
+            <div class="alert alert-danger alert-dismissible fade in" role="alert">
+              <h4>Входящий звонок!</h4>
+              <p id="IncommingFirmName"></p>
+              <p id="IncommingFio"></p>
+              <p><a id="IncommingCallGetJournal" class="btn btn-primary" href="#">Открыть журнал звонков данного клиента</a>
+                <button id="CloseInCallAlert" type="button" class="btn btn-default">Закрыть уведомление</button>
+              </p>
+            </div>
+          </div>
+
+
+          <div class="">
+            <div class="page-title">
+              <div class="title_left">
+                <h3>{{ self.title() }} </h3>
+              </div>
+
+              <div class="title_right">
+                <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
+                  <div class="input-group">
+                    <br><br>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="clearfix"></div>
+
+            {% block body %}{% endblock %}
+
+            <div class="clearfix"></div>
+
+          </div>
+        </div>
+
+        <!-- footer content -->
+        <footer>
+          <div class="pull-right">
+            CRM Dancer
+          </div>
+          <div class="clearfix"></div>
+        </footer>
+        <!-- /footer content -->
+      </div>
+    </div>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="/static/js/bootstrap.min.js"></script>
+    <!-- Custom Theme Scripts -->
+    <script src="/static/gentelella/build/js/custom.min.js"></script>
+  </body>
+</html>

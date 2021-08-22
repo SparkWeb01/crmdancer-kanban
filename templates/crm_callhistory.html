@@ -1,0 +1,159 @@
+{% extends "layout.html" %}
+{% block title %}Журнал звонков{% endblock %}
+{% block body %}
+  {%
+  set inf = client_info[0].Client
+  %}
+
+
+  <div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+      <div class="x_panel">
+        <div class="x_title">
+        <h2 class="{% if inf.loyalty == 'Лояльный' %}green{% else %}blue{% endif %}"><i class="fa fa-square"></i> {{ inf.company_name }}</h2>
+        <ul class="nav navbar-right panel_toolbox">
+          <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+          </li>
+        </ul>
+        <div class="clearfix"></div>
+      </div>
+      <div class="x_content">
+
+        <script>
+
+          $('#document').ready(function(){
+
+            /* Авторелоад модульных окон, чтобы не кешировать  */
+            $('body').on('hidden.bs.modal', '.modal', function () {
+              $(this).removeData('bs.modal');
+            });
+            /* END Авторелоад модульных окон */
+
+            (function($) {
+              $.fn.autoSave = function(callback, ms) {
+                return this.each(function() {
+                  var timer = 0,
+                    $this = $(this),
+                    delay = ms || 3000;
+                  $this.keyup(function() {
+                    var id = this.id;
+                    clearTimeout(timer);
+                    var $context = $this.val();
+                    timer = setTimeout(function() {
+                      $.post("/area/crm/autosave/comment/_ajax", { "id": id, "comment": $context } );
+                      console.log(id,'=' ,$context);
+                      callback();
+                    }, delay);
+                  });
+                });
+              };
+            })(jQuery);
+
+            var demoText = $(".demoTextArea");
+
+            demoText.autoSave(function() {
+              var time = showTime();
+              $(".alertBox").empty().append($('<div class="alert alert-success"><span class="alertMessage"></span></div>'));
+              $(".alertMessage").text("Комментарий автоматически сохранен в:" + time);
+              $(".alert").alert();
+            }, 500);
+
+            function showTime() {
+              var timeNow = new Date();
+              var hours = timeNow.getHours();
+              var minutes = timeNow.getMinutes();
+              var seconds = timeNow.getSeconds();
+              var timeString = hours;
+              timeString += ((minutes < 10) ? ":0" : ":") + minutes;
+              timeString += ((seconds < 10) ? ":0" : ":") + seconds;
+              return timeString;
+            }
+
+          });
+        </script>
+        <div class="row">
+          <button class="btn" data-toggle="collapse" data-target="#ClientCard">Развернуть карточку клиента</button>
+          <a class="btn btn-info" href="/area/crm/edit/{{ inf.id }}/" target="_blank"><span class="glyphicon glyphicon-pencil"></span>&nbsp; Отредактировать карточку клиента</a>
+
+          <a href="/area/crm/set-call-reminde/modal/?client_id={{ inf.id }}" data-toggle="modal" data-target="#ExternalModal"  class="btn btn-default">
+            <span><i class="fa fa-clock-o" aria-hidden="true"></i> Запланировать следующий звонок</span>
+          </a>
+
+          <div class="panel-group">
+            <div class="panel panel-default collapse" id="ClientCard">
+              <div class="panel-heading">
+                <h4 class="panel-title">
+                  Карточка клиента {{ inf.company_name }}
+                </h4>
+              </div>
+              <div id="collapse1" class="panel">
+                <ul class="list-group">
+                  {% if inf.city  %}<li class="list-group-item">Город: <b>{{ inf.city }}</b></li>{% endif %}
+                  <li class="list-group-item">Сегмент: <b>{{ inf.segment }}</b></li>
+                  <li class="list-group-item">Деятельность: <b>{{ inf.activity }}</b></li>
+                  {% if inf.site  %}<li class="list-group-item">Сайт: <b>{{ inf.site }}</b></li>{% endif %}
+                  {% if inf.email %}<li class="list-group-item">Емайл: <b>{{ inf.email }}</b></li>{% endif %}
+                  {% if inf.loyalty %}
+                    <li class="list-group-item">Лояльность: <b>
+                      <span class="{% if inf.loyalty == 'Лояльный' %}green{% else %}blue{% endif %}"><i class="fa fa-square"></i> {{ inf.loyalty}}</span></b></li>
+                {% endif %}
+                {% for c in client_info %}
+                  <li class="list-group-item">Телефон и ФИО:
+                    <b><a title="Позвонить" class="btn btn-success btn-xs" href="/area/crm/init/call/{{ inf.id }}/{{ c.Contact.tel }}/">
+                        <i class="fa fa-phone" aria-hidden="true"></i>&nbsp;{{ c.Contact.tel }}</a>
+                      {{ c.Contact.contact_person }}</b></li>
+                {% endfor %}
+              </ul>
+              <div class="panel-footer">Комментарий о компании: <b>{{ inf.comments }}</b></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="alertBox"></div>
+      </div>
+
+      {% for row in rows %}
+        <div class="row">
+          <div class="well">
+            <p>Дата: <b>{{ row.date_call.strftime('%d.%m.%Y %H:%M') }}</b>
+              {% if row.incomming == 0 %}
+                <span class="text-success">Звонок клиенту: <b>{{ row.call_to }}</b></span>
+              {% else %}
+                <span class="text-danger">Входящий звонок от клиента: <b>{{ row.call_from }}</b></span>
+              {% endif %}
+
+            </p>
+            <textarea class="form-control demoTextArea" id="{{ row.id }}" autocomplete="off" rows="6" placeholder="Ваш комментарий к звонку...">{%- if row.comment -%}{{ row.comment }}{%- endif -%}</textarea>
+          </div>
+        </div>
+      {% endfor %}
+
+
+
+
+      {% from "bootstrap/pagination.html" import render_pagination %}
+      {{render_pagination(pagination)}}
+
+
+
+    </div> <!-- x_content -->
+  </div>
+</div>
+  </div>
+
+
+
+
+  <!-- MODAL EXTERNAL - может служить для любых внешних модальных окон -->
+  <div class="modal fade" id="ExternalModal" tabindex="-1" role="dialog" aria-labelledby="ExternalModal" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+      </div><!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+  </div>
+  <!-- /MODAL EXTERNAL - может служить для любых внешних модальных окон -->
+
+
+{% endblock %}

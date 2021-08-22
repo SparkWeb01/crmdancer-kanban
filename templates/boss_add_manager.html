@@ -1,0 +1,26 @@
+{% extends "layout_boss.html" %}
+{% block title %}Создать нового менеджера{% endblock %}
+{% block body %}
+
+
+  <div class="row">
+    <div class="col-md-6 col-sm-6 col-xs-12">
+      <div class="x_panel">
+        <div class="x_title">
+          <h2>{{ self.title() }}</h2>
+          <ul class="nav navbar-right panel_toolbox">
+            <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+            </li>
+          </ul>
+          <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+          {% import "bootstrap/wtf.html" as wtf %}
+          {{ wtf.quick_form(form,  action="/area/boss/add/new/manager/", button_map={'submit':'success'}) }}
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <title>Инфо</title>
+  </head>
+  <script>
+    $(document).ready(function(){
+      $('#login').prop('readonly', true);
+    });
+  </script>
+
+  <body>
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+      <h4 class="modal-title">
+        Редактирование руководителя
+      </h4>
+    </div>     <!-- /modal-header -->
+    <div class="modal-body">
+
+      {% import "bootstrap/wtf.html" as wtf %}
+      {% set url = "/area/boss/edit/ruk/" + _id_ + "/" %}
+        {{ wtf.quick_form(form,  action=url, button_map={'submit':'primary'}) }}
+
+      </div>     <!-- /modal-body -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+      </div>     <!-- /modal-footer -->
+    </body>
+  </html>

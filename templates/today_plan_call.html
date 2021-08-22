@@ -1,0 +1,99 @@
+{% extends "layout.html" %}
+{% block title %}План звонков на сегодня{% endblock %}
+{% block body %}
+
+
+  <div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+      <div class="x_panel">
+        <div class="x_title">
+          <h2>{{ self.title() }}</h2>
+          <ul class="nav navbar-right panel_toolbox">
+            <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+            </li>
+          </ul>
+          <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+          <script type="text/javascript">
+            $('#document').ready(function(){
+              /* Авторелоад модульных окон, чтобы не кешировать  */
+              $('body').on('hidden.bs.modal', '.modal', function () {
+                $(this).removeData('bs.modal');
+              });
+              /* END Авторелоад модульных окон */
+            });
+          </script>
+
+
+          {%
+          set cat = {}
+          %}
+
+
+
+          {% for row in rows  %}
+            {% if loop.first %}
+              <ul class="list-unstyled timeline">
+              {% endif %}
+              {% if cat.get(row.id) %}
+                {% continue %}
+              {% endif %}
+              <li>
+                <div class="block">
+                  <div class="tags">
+                    <a href="/area/crm/set-call-reminde/modal/?client_id={{ row.id }}" data-toggle="modal" data-target="#ExternalModal"  class="tag">
+                      <span><i class="fa fa-clock-o" aria-hidden="true"></i> {{ row.call_date.strftime('%H:%M') }}</span>
+                    </a>
+                  </div>
+                  <div class="block_content">
+                  <h2 class="title {% if row.loyalty == 'Лояльный' %}green{% else %}blue{% endif %}"><i class="fa fa-square"></i> {{ row.company_name }}</h2>
+                  <div class="byline">
+                    <span>{{ row.status }}</span> клиент{% if row.city %}, г. {{ row.city }} {% endif %}
+                    {% if row.email %} {{ row.email }} {% endif %} {% if row.site %} {{ row.site }} {% endif %}
+                  </div>
+
+                  {% for c in rows if c.id == row.id %}
+                    <p><a title="Позвонить" class="btn btn-default btn-xs"
+                        href="/area/crm/init/call/{{ c.id }}/{{ c.tel }}/?callremid={{ row.call_remind_id }}"><i class="fa fa-phone text-success" aria-hidden="true"></i>
+                        {{ c.tel }}</a>&nbsp; {{ c.contact_person }}</p>
+                  {% endfor %}
+
+                  {% if row.comments %}<p class="excerpt"><b>Комментарий о компании:</b> {{ row.comments }}</p>{% endif %}
+                  {% if row.hist_comment %}<p class="excerpt"><b>Комментарий с последним разговором с клиентом:</b>&nbsp; {{ row.hist_comment }}</p>{% endif %}
+              </div>
+            </div>
+          </li>
+
+
+          {%
+          set _dummy = cat.update({row.id:1})
+          %}
+          {% if loop.last %}
+          </ul>
+        {% endif %}
+      {% else %}
+        <p>На сегодня вы не запланировали ни одного звонка.
+          Запланировать можно на <a href="/area/crm/">главной странице CRM <i class="fa fa-arrow-circle-right" aria-hidden="true"></i></a></p>
+      {% endfor %}
+
+      {% if cat %}</ul>{% endif %}
+
+  </div>
+</div>
+</div>
+</div>
+
+
+<!-- MODAL EXTERNAL - может служить для любых внешних модальных окон -->
+<div class="modal fade" id="ExternalModal" tabindex="-1" role="dialog" aria-labelledby="ExternalModal" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+    </div><!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+<!-- /MODAL EXTERNAL - может служить для любых внешних модальных окон -->
+
+
+{% endblock %}

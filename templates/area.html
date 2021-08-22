@@ -1,0 +1,148 @@
+{% extends "layout.html" %}
+{% block title %}Список записей{% endblock %}
+{% block body %}
+
+  <div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+      <div class="x_panel">
+        <div class="x_title">
+          <h2>{{ self.title() }}</h2>
+          <ul class="nav navbar-right panel_toolbox">
+            <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+            </li>
+          </ul>
+          <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+          <p>Выбрать другую дату(Кликните на серое поле):</p>
+          <form action="/newdate/" method="post">
+            <div class="row">
+              <div class="col-xs-3">
+                <input type="text" class="form-control" id="date_sf" name="date_sf" value="{{ date[6:8] }}.{{ date[4:6] }}.{{ date[0:4] }}" readonly required data-format="dd.MM.yyyy">
+                <script type="text/javascript">
+                  $(function () {
+                    $('#date_sf').datetimepicker({ language: 'ru', orientation: "auto", pickTime: false });
+                    /* minDate: moment() */
+                  });
+                </script>
+
+              </div>
+            </div>
+            <br>
+            <button type="submit" class="btn btn-primary">Показать записи за выбранную дату</button>
+
+          </form>
+
+          <!-- Фильтр -->
+          {% if admin_filter %}
+            <hr>
+            <p>Отфильтровать по внутреннему номеру:</p>
+            <div class="row">
+              <div class="col-xs-3">
+                <input type="text" class="form-control" id="ext"  placeholder="Введите внт. номер" >
+              </div>
+            </div>
+            <br>
+            <button type="button" class="btn btn-info" id="hit">Показать записи выбранного номера</button>
+            <button type="button" class="btn btn-danger" id="reset">Сбросить фильтр</button>
+            <script type="text/javascript">
+              $(document).ready(function() {
+                $('#hit').click(function(event) {
+                  var ext = $('#ext').val();
+                  $(".record").each(function() {
+                    var idr = this.id;
+                    var pattern = "-" + ext + "-";
+                    if ( idr.indexOf(pattern) >= 0){
+                      $(this).removeClass('hidden');
+                    }
+                    else{
+                      $(this).addClass('hidden');
+                    }
+                  });
+                });
+
+                $('#reset').click(function(event) {
+                  location.reload();
+                });
+              });
+            </script>
+
+            <!-- End Фильтр -->
+          {% endif %}
+
+          <div class="page-header">
+            <h2>Дата: {{ date[0:4] }}-{{ date[4:6] }}-{{ date[6:8] }}</h2>
+          </div>
+
+          {% for k  in unix_hash | sort %}
+            {% if loop.first %}
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th><small>Время</small></th>
+                    <th>
+                      <small>Тип</small>
+                    </th>
+                    <th>
+                      <small>Куда звонили</small>
+                    </th>
+                    <th>
+                      <small>Кто звонил</small>
+                    </th>
+                    <th>
+                      <small>Прослушать</small>
+                    </th>
+                    <th>
+                      <small>Продолжительность</small>
+                    </th>
+                    <th>
+                      <small>Скачать</small>
+                    </th>
+
+                  </tr>
+                </thead>
+                <tbody>
+
+                {%  endif %}
+                {% if unix_hash[k][0] in length_dict %}
+                  {% if ':' not in length_dict[unix_hash[k][0]] %}
+                    {% continue %}
+                  {% endif %}
+                {% endif %}
+                <tr id="{{  unix_hash[k][0] }}" class="record">
+                  <td>
+                    {{ k[0:2] }}:{{ k[2:4] }}:{{ k[4:6] }}
+                  </td>
+                  <td>{{  unix_hash[k][1] }}</td>
+                  <td>{{  unix_hash[k][2] }}</td>
+                  <td>{{  unix_hash[k][3] }}</td>
+                  <td>
+                    <audio controls preload="none">
+                      <source src="/static/mp3/{{  unix_hash[k][0] }}.mp3" type="audio/mpeg">
+                      Ваш браузер не поддерживает данный плеер.
+                    </audio>
+                  </td>
+                  <td>
+                    {% if unix_hash[k][0]  in length_dict %}
+                      {{ length_dict[unix_hash[k][0]] }}
+                    {% endif %}
+                  </td>
+                  <td><a href="/static/mp3/{{  unix_hash[k][0] }}.mp3" download="{{  unix_hash[k][0] }}.mp3">Скачать</a></td>
+                </tr>
+                {% if loop.last %}
+                </tbody>
+              </table>
+
+
+            {% endif %}
+
+          {% else %}
+            <p>Нет записей!</p>
+          {% endfor %}
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}

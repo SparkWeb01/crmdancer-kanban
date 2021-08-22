@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <title>Инфо</title>
+  </head>
+
+  <body>
+
+    <script>
+      $(document).ready(function() {
+
+        $('#CheckDublicateSubmit').on('submit', function() {
+          var phone = $('#tel').val();
+          function getAjax() {
+            var result="";
+            $.ajax({
+              url: "/area/crm/check/uniq/tel/_ajax?tel=" + phone,
+              async: false,
+              success: function(data) {
+                result = data;
+              }
+            });
+            return result;
+          };
+
+          var result = getAjax();
+
+
+          if (result == 'Uniq'){
+            return true;
+          }
+          else{
+            new PNotify({
+              title: 'Телефон не уникальный!',
+              text: 'Такой номер есть в базе данных',
+              type: 'error',
+              styling: 'bootstrap3'
+            });
+            return false;
+          }
+
+
+        });
+      });
+
+    </script>
+
+
+
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+      <h4 class="modal-title">Добавить новое контактное лицо</h4>
+    </div>     <!-- /modal-header -->
+    <div class="modal-body">
+
+      {% import "bootstrap/wtf.html" as wtf %}
+
+      <form method="post" id="CheckDublicateSubmit" action="/area/crm/add/new/contact/">
+        <input type="hidden" name="client_id" value="{{ client_id }}">
+        {{ form.hidden_tag() }}
+        {{ wtf.form_errors(form, hiddens="only") }}
+
+        {{ wtf.form_field(form.tel) }}
+        {{ wtf.form_field(form.contact_person) }}
+        {{ wtf.form_field(form.post) }}
+        <button type="submit" class="btn btn-success">Сохранить</button>
+      </form>
+
+
+
+    </div>     <!-- /modal-body -->
+    <div class="modal-footer">
+      <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+    </div>     <!-- /modal-footer -->
+  </body>
+</html>

@@ -1,0 +1,68 @@
+{% extends "layout.html" %}
+{% block title %}Редактирование карточки клиента{% endblock %}
+{% block body %}
+
+  <div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+      <div class="x_panel">
+        <div class="x_title">
+          <h2>{{ rows.company_name }}</h2>
+          <ul class="nav navbar-right panel_toolbox">
+            <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+            </li>
+          </ul>
+          <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+
+          {% for c in contact %}
+            <a href="/area/crm/modal/edit/contact/?client_id={{ rows.id }}&contact_id={{ c.id }}" data-toggle="modal" data-target="#ExternalModal">
+              <div class="product_price">
+                <h4 class="price">
+                  <i class="fa fa-edit m-right-xs"></i>
+                  {{ c.contact_person }} {% if c.post %} ({{ c.post }}){% endif %}
+                </h4>
+                <span class="price-tax">{{ c.tel }}</span>
+                <br>
+              </div>
+            </a>
+          {% endfor %}
+          <p><a href="/area/crm/modal/add/contact/?client_id={{ rows.id }}" data-toggle="modal" data-target="#ExternalModal"  class="btn btn-success btn-xs">
+              <i class="fa  fa-plus"></i> Добавить новое контактное лицо
+          </a></p>
+
+          {% import "bootstrap/wtf.html" as wtf %}
+          {{ wtf.quick_form(form,  action="/area/crm/edit/client/", button_map={'submit':'primary'}) }}
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    $(function () {
+      $('#datetimepicker2').datetimepicker({ language: 'ru', orientation: "auto" });
+    });
+  </script>
+  <script type="text/javascript">
+    $('#document').ready(function(){
+      /* Авторелоад модульных окон, чтобы не кешировать  */
+      $('body').on('hidden.bs.modal', '.modal', function () {
+        $(this).removeData('bs.modal');
+      });
+      /* END Авторелоад модульных окон */
+    });
+  </script>
+
+  <!-- MODAL EXTERNAL - может служить для любых внешних модальных окон -->
+  <div class="modal fade" id="ExternalModal" tabindex="-1" role="dialog" aria-labelledby="ExternalModal" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+      </div><!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+  </div>
+  <!-- /MODAL EXTERNAL - может служить для любых внешних модальных окон -->
+
+
+{% endblock %}

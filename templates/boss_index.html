@@ -1,0 +1,153 @@
+{% extends "layout_boss.html" %}
+{% block title %}Администрирование главная страница{% endblock %}
+{% block body %}
+
+
+  <!-- Заполняет точками пароли юзеров -->
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-show-password/1.0.3/bootstrap-show-password.min.js"></script>
+  <!-- Заполняет точками пароли юзеров -->
+  <script type="text/javascript">
+    $('#document').ready(function(){
+      /* Авторелоад модульных окон, чтобы не кешировать  */
+      $('body').on('hidden.bs.modal', '.modal', function () {
+        $(this).removeData('bs.modal');
+      });
+      /* END Авторелоад модульных окон */
+
+
+      $(document).on("click", ".open-ModalDialog", function () {
+        var url = $(this).data('load-url');
+        $('#ExternalModal').modal({remote: url});
+        $('#ExternalModal').modal('show');
+
+
+      })
+
+
+    })
+  </script>
+
+  {%
+  set ruk_dic = {}
+  %}
+
+
+  <div class="col-md-6 col-sm-6 col-xs-12">
+    <div class="x_panel">
+      <div class="x_title">
+        <h2><i class="fa fa-male" aria-hidden="true"></i> Руководители <small>Создание, Редактирование, Удаление</small></h2>
+        <ul class="nav navbar-right panel_toolbox">
+          <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+        </ul>
+        <div class="clearfix"></div>
+      </div>
+      <div class="x_content">
+        <table class="table table-condensed jambo_table table-bordered">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Логин</th>
+              <th>Пароль</th>
+              <th>Имя</th>
+              <th style="width:100px;"></th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for row in rows if row.role == 'ruk'%}
+              <tr>
+                <th scope="row">{{ loop.index }}</th>
+                <td>{{ row.login }}</td>
+                <td>
+                  <div class="form-group">
+                    <input type="password" id="{{ row.login }}" name="password" class="form-control input-sm passw" data-toggle="password" value="{{ row.passw }}">
+                  </div>
+                  <td>{{ row.name if row.name else 'неизвестно' }}</td>
+                  <td><button data-load-url="/area/boss/edit/ruk/{{ row.id }}/"
+                      class="btn btn-default btn-sm open-ModalDialog"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> </button>
+                    <a class="btn btn-default" href="/area/boss/del/user/{{ row.id }}/"
+                      onclick="return confirm('Вы уверены, что хотите удалить данного пользователя?');"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+                  </td>
+                </tr>
+
+                {%
+                set _dummy = ruk_dic.update({row.id:row.login})
+                %}
+
+              {% endfor %}
+
+            </tbody>
+          </table>
+          <p><a href="/area/boss/add/new/ruk/">Создать нового руководителя <span class="label label-success"><i class="fa fa-plus" aria-hidden="true"></i></span> </a></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="clearfix"></div>
+
+    <div class="col-md-6 col-sm-6 col-xs-12">
+      <div class="x_panel">
+        <div class="x_title">
+          <h2><i class="fa fa-users"></i> Менеджеры <small>Создание, Редактирование, Удаление</small></h2>
+          <ul class="nav navbar-right panel_toolbox">
+            <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+          </ul>
+          <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+          <table class="table table-condensed jambo_table table-bordered">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Логин</th>
+                <th>Пароль</th>
+                <th>Имя</th>
+                <th>Внт.номер</th>
+                <th>Префикс</th>
+                <th>Руководитель</th>
+                <th style="width:100px;"></th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for row in rows if row.role == 'manager' %}
+                <tr>
+                  <th scope="row">{{ loop.index }}</th>
+                  <td>{{ row.login }}</td>
+                  <td>
+                    <div class="form-group">
+                      <input type="password" id="{{ row.login }}" name="password" class="form-control input-sm passw" data-toggle="password" value="{{ row.passw }}">
+                    </div>
+                    <td>{{ row.name if row.name else 'неизвестно' }}</td>
+                    <td>{{ row.exten }}</td>
+                    <td>{{ row.prefix }}</td>
+                  <td>{% if ruk_dic.get(row.ruk_id) %}{{ ruk_dic[row.ruk_id] }}{% else %}неопределен{% endif %}</td>
+                    <td><button data-load-url="/area/boss/edit/manager/{{ row.id }}/"
+                        class="btn btn-default btn-sm open-ModalDialog"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> </button>
+                      <a class="btn btn-default" href="/area/boss/del/user/{{ row.id }}/"
+                        onclick="return confirm('Вы уверены, что хотите удалить данного пользователя?');"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+
+                    </td>
+
+                  </tr>
+
+                {% endfor %}
+
+              </tbody>
+            </table>
+            <p><a href="/area/boss/add/new/manager/">Создать нового менеджера <span class="label label-success"><i class="fa fa-plus" aria-hidden="true"></i></span> </a></p>
+          </div>
+        </div>
+      </div>
+
+      <!-- MODAL EXTERNAL - может служить для любых внешних модальных окон -->
+      <div class="modal fade" id="ExternalModal" tabindex="-1" role="dialog" aria-labelledby="ExternalModal" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+          </div><!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
+      <!-- /MODAL EXTERNAL - может служить для любых внешних модальных окон -->
+
+
+
+    {% endblock %}

@@ -1,0 +1,96 @@
+{% extends "layout.html" %}
+{% block title %}Создать нового клиента{% endblock %}
+{% block body %}
+
+  {% import "bootstrap/wtf.html" as wtf %}
+
+  <!-- jQuery Smart Wizard -->
+
+  <script>
+    $(document).ready(function() {
+
+      $('#CheckDublicateSubmit').on('submit', function() {
+        var phone = $('#CheckerUniqPhone').val();
+        $.get("/area/crm/check/uniq/tel/_ajax",
+          {
+            tel: phone,
+          },
+          onAjaxSuccess
+        );
+
+        function onAjaxSuccess(data)
+        {
+          if (data == 'Uniq'){
+            new PNotify({
+              title: 'Телефон уникальный',
+              text: 'Клиента можно добавлять!',
+              type: 'success',
+              styling: 'bootstrap3'
+            });
+            $("#step-2").removeClass("hidden");
+            $("#step-1").hide();
+            $("#hOneHeader").text('Шаг второй. Создание нового клиента');
+            $("#tel").val(phone);
+            $("#tel").prop('readonly', true);
+
+          }
+          else{
+
+            new PNotify({
+              title: 'Телефон не уникальный',
+              text: 'Клиент с таким номером телефона уже есть в базе данных!',
+              type: 'error',
+              styling: 'bootstrap3'
+            });
+
+
+          }
+        }
+        return false;
+      });
+
+
+    });
+  </script>
+  <!-- /jQuery Smart Wizard -->
+
+  <div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+      <div class="x_panel">
+        <div class="x_title">
+          <h2 id="hOneHeader">Шаг первый. Проверка на уникальность.</h2>
+          <ul class="nav navbar-right panel_toolbox">
+            <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+            </li>
+          </ul>
+          <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+
+          <!-- Smart Wizard -->
+          <div id="wizard">
+            <div id="step-1">
+              <form id="CheckDublicateSubmit" autocomplete="off"> <!--  autocomplete="off" -->
+                <div class="form-group col-xs-4">
+                  <label for="CheckerUniqPhone">Телефон клиента:</label>
+                  {{ form.tel(id="CheckerUniqPhone", class_="form-control",   required=true) }}
+                  <span class="help-block">На первом шаге проверяем, что номер телефона отсутствует в базе данных клиентов</span>
+                </div>
+                <div class="clearfix"></div>
+                <div class="form-group col-xs-4">
+                  <button type="submit" class="btn btn-danger">Проверить на уникальность</button>
+                </div>
+              </form>
+            </div>
+            <div id="step-2" class="hidden">
+              {{ wtf.quick_form(form,  action="/area/crm/add/new/client/", button_map={'submit':'success'}) }}
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}

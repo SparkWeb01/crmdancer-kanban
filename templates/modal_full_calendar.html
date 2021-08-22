@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <title>Инфо</title>
+  </head>
+  <script>
+    if (top.location != location) {
+      top.location.href = document.location.href ;
+    }
+$(function(){
+  /* Календарик в модальном окошке */
+  $('#start').datetimepicker({ language: 'ru', orientation: "auto" });
+  $('#end').datetimepicker({ language: 'ru', orientation: "auto" });
+  /* /Календарик в модальном окошке */
+});
+  </script>
+
+  <body>
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+      <h4 class="modal-title">
+        {% if action == 'insert' %}
+          Новое событие в календарь
+        {% else %}
+          Изменить событие
+        {% endif %}
+      </h4>
+    </div>     <!-- /modal-header -->
+    <div class="modal-body">
+
+      {% import "bootstrap/wtf.html" as wtf %}
+      {% set url = "/area/crm/fullcalendar/" + action + "/" %}
+        {{ wtf.quick_form(form,  action=url, button_map={'submit':'primary'}) }}
+
+      </div>     <!-- /modal-body -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+      </div>     <!-- /modal-footer -->
+    </body>
+  </html>
